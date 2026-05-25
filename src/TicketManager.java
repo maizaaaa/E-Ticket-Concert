@@ -33,7 +33,7 @@ public class TicketManager {
             if (availableTickets >= requestedPax) {
                 availableTickets -= requestedPax;
 
-                //successfulBookings.add(new REFERENCE.BookingRequest(userName, requestedPax));
+                successfulBookings.add(new BookingRequest(userName, requestedPax));
 
                 gui.logMessage("  -> [SUCCESS] " + userName + " bought " + requestedPax + " ticket(s). Remaining: " + availableTickets);
                 gui.updateTicketLabel(availableTickets);
