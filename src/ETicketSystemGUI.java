@@ -19,11 +19,23 @@ public class ETicketSystemGUI extends JFrame {
         // Initialize ticket manager
         manager = new TicketManager(50);
 
-        // Frame settings
+        // ==========================================
+        // FRAME SETTINGS & FAVICON
+        // ==========================================
         setTitle("E-Ticket Purchasing System");
         setSize(850, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // Memuat dan memasang favicon.png dari folder src/assets
+        java.net.URL iconURL = getClass().getResource("/assets/favicon.png");
+        if (iconURL != null) {
+            ImageIcon icon = new ImageIcon(iconURL);
+            this.setIconImage(icon.getImage());
+        } else {
+            System.out.println("Peringatan: favicon.png tidak ditemukan di /assets/");
+        }
+        // ==========================================
 
         // Main background
         getContentPane().setBackground(
@@ -264,7 +276,6 @@ public class ETicketSystemGUI extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
 
         //button action for manual purchase
-        //buyer name
         buyButton.addActionListener(e -> {
             String buyerName =
                     nameInput.getText().trim();
@@ -297,10 +308,14 @@ public class ETicketSystemGUI extends JFrame {
             logMessage(
                     "\n===== STARTING 100 USER SIMULATION =====\n"
             );
+            for (int i = 1; i <= 100; i++) {
+                String userName = "User-" + i;
 
+                // Setiap user membeli 1 tiket
+                Thread userThread = new Thread(new Buyer(manager, userName, 1, this));
+                userThread.start(); // Menjalankan thread secara asynchronous/bersamaan
+            }
             //** THREAD SLEEP AND JOIN **//
-
-
         });
     }
 
