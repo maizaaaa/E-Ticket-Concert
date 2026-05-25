@@ -27,13 +27,12 @@ public class ETicketSystemGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Memuat dan memasang favicon.png dari folder src/assets
         java.net.URL iconURL = getClass().getResource("/assets/favicon.png");
         if (iconURL != null) {
             ImageIcon icon = new ImageIcon(iconURL);
             this.setIconImage(icon.getImage());
         } else {
-            System.out.println("Peringatan: favicon.png tidak ditemukan di /assets/");
+            System.out.println("Warning: favicon.png not found in /assets/");
         }
         // ==========================================
 
