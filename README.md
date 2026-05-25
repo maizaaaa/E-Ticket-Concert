@@ -1,5 +1,17 @@
 # E-Ticket-Concert
 
+## Project Overview
+The E-Ticket Concert Purchasing System is a Java-based real-time application developed to simulate online concert ticket purchasing with multiple users accessing the system simultaneously.
+
+This project focus on implementing Java Concurreny such as threads, synchronization, locks, thread joining, thread influencing and concurrent execution.
+
+The system allows users to:
+- Purchase concert tickets
+- Simulate multiple users buying tickets at the same time
+- Prevent ticket overselling
+- Display real-time booking logs
+- Handle concurrent access safely
+
 ## Result/Output (Screenshot of the output)
 |  Operation | Picture | 
 |---------------|----------------|
