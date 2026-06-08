@@ -5,10 +5,10 @@ import java.awt.*;
 public class ETicketSystemGUI extends JFrame {
 
     private JLabel ticketLabel;
-    private JTextArea logArea;
+    private JTextArea systemLogArea;
+    private JTextArea consumerLogArea;
     private JTextField nameInput;
     private JComboBox<Integer> paxInput;
-
     private JButton buyButton;
     private JButton simulateButton;
 
@@ -16,14 +16,13 @@ public class ETicketSystemGUI extends JFrame {
 
     public ETicketSystemGUI() {
 
-        // Initialize ticket manager
         manager = new TicketManager(50);
 
         // ==========================================
         // FRAME SETTINGS & FAVICON
         // ==========================================
         setTitle("E-Ticket Purchasing System");
-        setSize(850, 650);
+        setSize(1000, 650); // Slightly wider to accommodate two panels comfortably
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -34,72 +33,30 @@ public class ETicketSystemGUI extends JFrame {
         } else {
             System.out.println("Warning: favicon.png not found in /assets/");
         }
-        // ==========================================
 
         // Main background
-        getContentPane().setBackground(
-                new Color(245, 247, 250)
-        );
-
+        getContentPane().setBackground(new Color(245, 247, 250));
         setLayout(new BorderLayout(15, 15));
 
-        // header panel
+        // ==========================================
+        // HEADER PANEL
+        // ==========================================
         JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(new Color(30, 41, 59));
+        headerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        headerPanel.setLayout(new GridLayout(3, 1, 5, 5));
 
-        headerPanel.setBackground(
-                new Color(30, 41, 59)
-        );
-
-        headerPanel.setBorder(
-                new EmptyBorder(20, 20, 20, 20)
-        );
-
-        headerPanel.setLayout(
-                new GridLayout(3, 1, 5, 5)
-        );
-
-        JLabel titleLabel = new JLabel(
-                "Concert E-Ticket Purchasing System",
-                SwingConstants.CENTER
-        );
-
-        titleLabel.setFont(
-                new Font("Segoe UI",
-                        Font.BOLD,
-                        28)
-        );
-
+        JLabel titleLabel = new JLabel("Concert E-Ticket Purchasing System", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
 
-        JLabel concertLabel = new JLabel(
-                "SEVENTEEN World Tour 2026",
-                SwingConstants.CENTER
-        );
+        JLabel concertLabel = new JLabel("SEVENTEEN World Tour 2026", SwingConstants.CENTER);
+        concertLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        concertLabel.setForeground(new Color(220, 220, 220));
 
-        concertLabel.setFont(
-                new Font("Segoe UI",
-                        Font.PLAIN,
-                        18)
-        );
-
-        concertLabel.setForeground(
-                new Color(220, 220, 220)
-        );
-
-        ticketLabel = new JLabel(
-                "Available Tickets: 50",
-                SwingConstants.CENTER
-        );
-
-        ticketLabel.setFont(
-                new Font("Segoe UI",
-                        Font.BOLD,
-                        20)
-        );
-
-        ticketLabel.setForeground(
-                new Color(0, 255, 140)
-        );
+        ticketLabel = new JLabel("Available Tickets: 50", SwingConstants.CENTER);
+        ticketLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        ticketLabel.setForeground(new Color(0, 255, 140));
 
         headerPanel.add(titleLabel);
         headerPanel.add(concertLabel);
@@ -107,264 +64,151 @@ public class ETicketSystemGUI extends JFrame {
 
         add(headerPanel, BorderLayout.NORTH);
 
-        // center panel
-        JPanel centerPanel = new JPanel(
-                new BorderLayout()
-        );
+        // ==========================================
+        // CENTER PANEL (SIDE-BY-SIDE LOGS)
+        // ==========================================
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 15, 0));
+        centerPanel.setBackground(new Color(245, 247, 250));
+        centerPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-        centerPanel.setBackground(
-                new Color(245, 247, 250)
-        );
+        // Producer Log Area
+        systemLogArea = new JTextArea();
+        systemLogArea.setEditable(false);
+        systemLogArea.setFont(new Font("Consolas", Font.PLAIN, 13));
+        systemLogArea.setBackground(new Color(250, 250, 250)); // Slightly off-white to distinguish
+        systemLogArea.setForeground(new Color(0, 50, 150)); // Dark blue text for system
+        systemLogArea.setMargin(new Insets(10, 10, 10, 10));
 
-        centerPanel.setBorder(
-                new EmptyBorder(10, 20, 10, 20)
-        );
+        JScrollPane sysScroll = new JScrollPane(systemLogArea);
+        sysScroll.setBorder(BorderFactory.createTitledBorder(
+                new LineBorder(new Color(180, 180, 180), 1),
+                "Engine and Summary Log",
+                TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Segoe UI", Font.BOLD, 14)
+        ));
 
-        logArea = new JTextArea();
+        // Consumer Log Area
+        consumerLogArea = new JTextArea();
+        consumerLogArea.setEditable(false);
+        consumerLogArea.setFont(new Font("Consolas", Font.PLAIN, 13));
+        consumerLogArea.setBackground(Color.WHITE);
+        consumerLogArea.setForeground(Color.BLACK);
+        consumerLogArea.setMargin(new Insets(10, 10, 10, 10));
 
-        logArea.setEditable(false);
+        JScrollPane consScroll = new JScrollPane(consumerLogArea);
+        consScroll.setBorder(BorderFactory.createTitledBorder(
+                new LineBorder(new Color(180, 180, 180), 1),
+                "Consumer Logs",
+                TitledBorder.LEFT, TitledBorder.TOP,
+                new Font("Segoe UI", Font.BOLD, 14)
+        ));
 
-        logArea.setFont(
-                new Font("Consolas",
-                        Font.PLAIN,
-                        14)
-        );
-
-        logArea.setBackground(Color.WHITE);
-
-        logArea.setForeground(Color.BLACK);
-
-        logArea.setMargin(
-                new Insets(10, 10, 10, 10)
-        );
-
-        JScrollPane scrollPane =
-                new JScrollPane(logArea);
-
-        scrollPane.setBorder(
-                BorderFactory.createTitledBorder(
-                        new LineBorder(
-                                new Color(180, 180, 180),
-                                1
-                        ),
-                        "Real-Time Booking Logs",
-                        TitledBorder.LEFT,
-                        TitledBorder.TOP,
-                        new Font(
-                                "Segoe UI",
-                                Font.BOLD,
-                                14
-                        )
-                )
-        );
-
-        centerPanel.add(scrollPane);
+        centerPanel.add(sysScroll);
+        centerPanel.add(consScroll);
         add(centerPanel, BorderLayout.CENTER);
 
-        // bottom panel
+        // ==========================================
+        // BOTTOM PANEL (FORM & BUTTONS)
+        // ==========================================
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(
-                new BorderLayout()
-        );
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.setBackground(new Color(245, 247, 250));
+        bottomPanel.setBorder(new EmptyBorder(10, 20, 20, 20));
 
-        bottomPanel.setBackground(
-                new Color(245, 247, 250)
-        );
-
-        bottomPanel.setBorder(
-                new EmptyBorder(10, 20, 20, 20)
-        );
-
-        // form user panel
-        JPanel formPanel = new JPanel(
-                new GridLayout(2, 2, 15, 15)
-        );
-
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 15, 15));
         formPanel.setBackground(Color.WHITE);
-        formPanel.setBorder(
-                new CompoundBorder(
-                        new LineBorder(
-                                new Color(220, 220, 220)
-                        ),
-                        new EmptyBorder(
-                                20, 20, 20, 20
-                        )
-                )
-        );
+        formPanel.setBorder(new CompoundBorder(
+                new LineBorder(new Color(220, 220, 220)),
+                new EmptyBorder(20, 20, 20, 20)
+        ));
 
-        JLabel nameLabel =
-                new JLabel("Buyer Name:");
-        nameLabel.setFont(
-                new Font("Segoe UI",
-                        Font.BOLD,
-                        14)
-        );
-
+        JLabel nameLabel = new JLabel("Buyer Name:");
+        nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
         nameInput = new JTextField();
-        nameInput.setFont(
-                new Font("Segoe UI",
-                        Font.PLAIN,
-                        14)
-        );
+        nameInput.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
-        JLabel paxLabel =
-                new JLabel("Number of Tickets:");
-        paxLabel.setFont(
-                new Font("Segoe UI",
-                        Font.BOLD,
-                        14)
-        );
-
+        JLabel paxLabel = new JLabel("Number of Tickets:");
+        paxLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
         Integer[] paxOptions = {1, 2, 3, 4};
         paxInput = new JComboBox<>(paxOptions);
-        paxInput.setFont(
-                new Font("Segoe UI",
-                        Font.PLAIN,
-                        14)
-        );
+        paxInput.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
         formPanel.add(nameLabel);
         formPanel.add(nameInput);
-
         formPanel.add(paxLabel);
         formPanel.add(paxInput);
 
-        // button panel
-        JPanel buttonPanel = new JPanel(
-                new FlowLayout(
-                        FlowLayout.CENTER,
-                        20,
-                        15
-                )
-        );
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
+        buttonPanel.setBackground(new Color(245, 247, 250));
 
-        buttonPanel.setBackground(
-                new Color(245, 247, 250)
-        );
+        buyButton = new JButton("Buy Ticket");
+        styleButton(buyButton, new Color(34, 197, 94));
 
-        buyButton = new JButton(
-                "Buy Ticket"
-        );
-
-        styleButton(
-                buyButton,
-                new Color(34, 197, 94)
-        );
-
-        simulateButton = new JButton(
-                "Simulate 100 Users"
-        );
-
-        styleButton(
-                simulateButton,
-                new Color(239, 68, 68)
-        );
+        simulateButton = new JButton("Simulate 100 Users");
+        styleButton(simulateButton, new Color(239, 68, 68));
 
         buttonPanel.add(buyButton);
         buttonPanel.add(simulateButton);
-        bottomPanel.add(
-                formPanel,
-                BorderLayout.NORTH
-        );
-
-        bottomPanel.add(
-                buttonPanel,
-                BorderLayout.SOUTH
-        );
+        bottomPanel.add(formPanel, BorderLayout.NORTH);
+        bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(bottomPanel, BorderLayout.SOUTH);
 
-        //button action for manual purchase
+        // BUTTON ACTIONS
         buyButton.addActionListener(e -> {
-            String buyerName =
-                    nameInput.getText().trim();
+            String buyerName = nameInput.getText().trim();
             if (buyerName.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Please enter Buyer Name!",
-                        "Input Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                JOptionPane.showMessageDialog(this, "Please enter Buyer Name!", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            int requestedPax =
-                    (int) paxInput.getSelectedItem();
-            Thread buyerThread = new Thread(
-                    new Buyer(
-                            manager,
-                            buyerName,
-                            requestedPax,
-                            this
-                    )
-            );
+            int requestedPax = (int) paxInput.getSelectedItem();
+            Thread buyerThread = new Thread(new Buyer(manager, buyerName, requestedPax, this));
             buyerThread.start();
             nameInput.setText("");
         });
 
-        //simulate 100 users
         simulateButton.addActionListener(e -> {
             simulateButton.setEnabled(false);
             new Thread(() -> SimulationEngine.startSimulation(manager, this, simulateButton)).start();
         });
     }
 
-    // button style
-    private void styleButton(
-            JButton button,
-            Color color
-    ) {
+    private void styleButton(JButton button, Color color) {
         button.setFocusPainted(false);
-        button.setFont(
-                new Font("Segoe UI",
-                        Font.BOLD,
-                        14)
-        );
-
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
         button.setBackground(color);
         button.setForeground(Color.WHITE);
-        button.setPreferredSize(
-                new Dimension(200, 45)
-        );
-
-        button.setBorder(
-                new EmptyBorder(10, 20, 10, 20)
-        );
-
-        button.setCursor(
-                new Cursor(Cursor.HAND_CURSOR)
-        );
+        button.setPreferredSize(new Dimension(200, 45));
+        button.setBorder(new EmptyBorder(10, 20, 10, 20));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    // update ticket label
     public void updateTicketLabel(int tickets) {
         SwingUtilities.invokeLater(() -> {
             if (tickets > 0) {
-                ticketLabel.setText(
-                        "Available Tickets: " + tickets
-                );
-            }
-            else {
+                ticketLabel.setText("Available Tickets: " + tickets);
+            } else {
                 ticketLabel.setForeground(Color.RED);
                 ticketLabel.setText("SOLD OUT");
             }
         });
     }
 
-    // log message on center
-    public void logMessage(String message) {
+    public void logSystemMessage(String message) {
         SwingUtilities.invokeLater(() -> {
-            logArea.append(message + "\n");
-            logArea.setCaretPosition(
-                    logArea.getDocument().getLength()
-            );
+            systemLogArea.append(message + "\n");
+            systemLogArea.setCaretPosition(systemLogArea.getDocument().getLength());
         });
     }
 
-    // main method
-    public static void main(String[] args) {
+    public void logConsumerMessage(String message) {
         SwingUtilities.invokeLater(() -> {
-            new ETicketSystemGUI()
-                    .setVisible(true);
+            consumerLogArea.append(message + "\n");
+            consumerLogArea.setCaretPosition(consumerLogArea.getDocument().getLength());
         });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new ETicketSystemGUI().setVisible(true));
     }
 }

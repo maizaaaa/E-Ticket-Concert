@@ -1,12 +1,12 @@
-// generate simple report on the bottom
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SalesAnalyzer {
 
     public static void generateReport(TicketManager manager, ETicketSystemGUI gui) {
-        gui.logMessage("\n==================================================");
-        gui.logMessage("                 SALES CONCLUDED                  ");
-        gui.logMessage("==================================================");
+        gui.logSystemMessage("\n==================================================");
+        gui.logSystemMessage("                 SALES CONCLUDED                  ");
+        gui.logSystemMessage("==================================================");
 
         List<BookingRequest> successfulList = manager.getSuccessfulBookings();
 
@@ -16,15 +16,24 @@ public class SalesAnalyzer {
                 .mapToInt(BookingRequest::getPax)
                 .sum();
 
-        gui.logMessage("Remaining Tickets: " + manager.getRemainingTickets());
-        gui.logMessage("Total Successful Buyers: " + totalSuccessfulUsers);
-        gui.logMessage("Total Tickets Distributed: " + totalTicketsSold);
+        gui.logSystemMessage("Remaining Tickets: " + manager.getRemainingTickets());
+        gui.logSystemMessage("Total Successful Buyers: " + totalSuccessfulUsers);
+        gui.logSystemMessage("Total Tickets Distributed: " + totalTicketsSold);
 
-        gui.logMessage("\n--- Concurrency Validation Test ---");
+        gui.logSystemMessage("\n==================================================");
+        gui.logSystemMessage("                  WINNER (" + totalSuccessfulUsers + " users)              ");
+        gui.logSystemMessage("==================================================");
+
+        String successNames = successfulList.stream()
+                .map(BookingRequest::getUserId)
+                .collect(Collectors.joining("\n"));
+        gui.logSystemMessage(successNames);
+
+        gui.logSystemMessage("\n--- Concurrency Validation Test ---");
         if (totalTicketsSold + manager.getRemainingTickets() == manager.getTotalTickets()) {
-            gui.logMessage("[PASS] Data integrity maintained. No tickets oversold.");
+            gui.logSystemMessage("[PASS] Data integrity maintained. No tickets oversold.");
         } else {
-            gui.logMessage("[FAIL] Race condition detected! Ticket count mismatch.");
+            gui.logSystemMessage("[FAIL] Race condition detected! Ticket count mismatch.");
         }
     }
 }
