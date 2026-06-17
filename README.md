@@ -14,11 +14,11 @@ The system allows users to:
 ## Result/Output (Screenshot of the output)
 |  Operation | Picture | 
 |---------------|----------------|
-| Front Page | <img width="840" height="649" alt="image" src="https://github.com/user-attachments/assets/dd7a69c7-02b5-43eb-8b91-b0d921e0577f" />
- |
-| Buy Ticket by User | <img width="840" height="649" alt="image" src="https://github.com/user-attachments/assets/43306f5b-928a-4527-a611-1a9b845c713f" /> |
-| Simulate 100 User | <img width="840" height="648" alt="image" src="https://github.com/user-attachments/assets/73e68b63-235e-4156-832d-652ecc06e0e4" /> |
-| Sales Conclude | <img width="839" height="649" alt="image" src="https://github.com/user-attachments/assets/9876f243-c973-4c3a-aec8-c94a76a02e46" /> |
+| Front Page | <img width="740" height="485" alt="image" src="https://github.com/user-attachments/assets/dd7a69c7-02b5-43eb-8b91-b0d921e0577f" /> |
+| Buy Ticket by User | <img width="740" height="485" alt="image" src="https://github.com/user-attachments/assets/12607b8a-4c59-456c-a612-7c2edf8af936" /> |
+| Producer Release Ticket | <img width="740" height="485" alt="image" src="https://github.com/user-attachments/assets/69f6e3c1-38ac-4aaa-81c4-6581fd96512b" /> |
+| Simulate 100 User | <img width="740" height="485" alt="image" src="https://github.com/user-attachments/assets/06072eb1-5aa6-4d28-91e4-dc0590031cb0" /> |
+| Sales Conclude | <img width="740" height="485" alt="image" src="https://github.com/user-attachments/assets/bd622d7e-e7ff-4082-9242-15a066b28774" /> |
 
 
 
